@@ -1,0 +1,26 @@
+#Test create new bank account 135, with start balance of 500 - success
+curl http://35.244.116.250:80/mybank/create -d "acNum=135" -d "startBal=500" -H "authorization:abcdefg" -X PUT
+
+#Test create bank account already exists - fail
+curl http://35.244.116.250:80/mybank/create -d "acNum=135" -d "startBal=500" -H "authorization:abcdefg" -X PUT
+
+#Test create bank account, with wrong authorization header - fail
+curl http://35.244.116.250:80/mybank/create -d "acNum=135" -d "startBal=500" -H "authorization:abcdefgxxxxxx" -X PUT
+
+#Test create bank account, without providing authorization header - fail
+curl http://35.244.116.250:80/mybank/create -d "acNum=135" -d "startBal=500"  -X PUT
+
+#Test check account balance - success
+curl http://35.244.116.250:80/mybank/account -d "acNum=135" -H "authorization:abcdefg" -X POST
+
+#Test deposite negative value - fail
+curl http://35.244.116.250:80/mybank/deposite -d "acNum=135" -H "authorization:abcdefg" -X POST
+
+#Test deposite 500, account balance now becomes 1000 - success
+curl http://35.244.116.250:80/mybank/deposite -d "acNum=135" -d "deltaAmount=500" -H "authorization:abcdefg" -X POST
+
+#Test with draw negative 300 - fail
+curl http://35.244.116.250:80/mybank/deposite -d "acNum=135" -d "deltaAmount=-300" -H "authorization:abcdefg" -X POST
+
+#Test with draw more than current balance - fail
+curl http://35.244.116.250:80/mybank/withdraw -d "acNum=135" -d "deltaAmount=30000" -H "authorization:abcdefg" -X POST

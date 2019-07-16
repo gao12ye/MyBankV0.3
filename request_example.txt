@@ -1,0 +1,6 @@
+curl http://localhost:9999/mybank/create -d "acNum=123" -d "startBal=500" -H "authorization=abcdefg" -X PUT
+curl http://localhost:9999/mybank/account -d "acNum=123" -X POST
+curl http://localhost:9999/mybank/withdraw -d "acNum=123" -d "deltaAmount=200" -X POST
+curl http://localhost:9999/mybank/deposite -d "acNum=123" -d "deltaAmount=200" -X POST
+
+$ curl http://35.244.78.42:80/mybank/create -d "acNum=123" -d "startBal=500" -H "authorization:abcdefg" -X PUT
